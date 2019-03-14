@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import BookForm from "./forms/BookForm";
 import Modal from "react-responsive-modal";
 
+import authStore from "./stores/authStore"
+
 class AddBookModal extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +28,7 @@ class AddBookModal extends Component {
         <Modal open={open} onClose={this.onCloseModal} center>
           <BookForm author={this.props.author} closeModal={this.onCloseModal} />
         </Modal>
-        <input type="button" onClick={this.onOpenModal} value="Add New Book!" />
+        {authStore.user && <input type="button" onClick={this.onOpenModal} value="Add New Book!" />}
       </div>
     );
   }

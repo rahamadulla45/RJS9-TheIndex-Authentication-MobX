@@ -1,31 +1,32 @@
-import React, { Component } from "react";
-import { observer } from "mobx-react";
+import React, { Component } from 'react'
+import { observer } from 'mobx-react'
 
 // Components
-import AuthorCard from "./AuthorCard";
-import SearchBar from "./SearchBar";
-import AddAuthorCard from "./AddAuthorCard";
+import AuthorCard from './AuthorCard'
+import SearchBar from './SearchBar'
+import AddAuthorCard from './AddAuthorCard'
 
 // Store
-import authorStore from "./stores/AuthorStore";
+import authorStore from './stores/AuthorStore'
+import authStore from './stores/authStore'
 
 class AuthorsList extends Component {
-  render() {
+  render () {
     const authorCards = authorStore.filteredAuthors.map(author => (
       <AuthorCard key={author.id} author={author} />
-    ));
+    ))
 
     return (
-      <div className="authors">
+      <div className='authors'>
         <h3>Authors</h3>
         <SearchBar store={authorStore} />
-        <div className="row">
-          <AddAuthorCard />
+        <div className='row'>
+          {authStore.user && <AddAuthorCard />}
           {authorCards}
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default observer(AuthorsList);
+export default observer(AuthorsList)
