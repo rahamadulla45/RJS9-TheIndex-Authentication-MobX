@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-
+import { observer } from 'mobx-react'
 import authStore from '../stores/authStore'
 
 class Login extends Component {
@@ -65,4 +65,4 @@ class Login extends Component {
   }
 }
 
-export default Login
+export default observer(Login)

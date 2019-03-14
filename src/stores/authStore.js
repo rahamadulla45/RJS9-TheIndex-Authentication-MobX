@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import jwt_decode from 'jwt-decode'
-import { decorate, observable, computed } from 'mobx'
+import { decorate, observable } from 'mobx'
 import axios from 'axios'
 
 class AuthStore extends Component {
@@ -14,7 +14,7 @@ class AuthStore extends Component {
       )
       const user = res.data
       this.setUser(user.token)
-      history.push('/login/')
+      history.replace('/login/')
     } catch (err) {
       console.log(err)
     }
@@ -28,7 +28,7 @@ class AuthStore extends Component {
       )
       const user = res.data
       this.setUser(user.token)
-      history.push('/')
+      history.replace('/')
     } catch (err) {
       console.error(err)
     }
@@ -42,9 +42,13 @@ class AuthStore extends Component {
       if (user.exp >= currentTime) {
         this.setUser(token)
       } else {
-        this.setUser()
+        this.logout()
       }
     }
+  }
+
+  logout = () => {
+    this.setUser()
   }
 
   setUser = token => {
@@ -54,8 +58,8 @@ class AuthStore extends Component {
       this.user = decodedUser
       localStorage.setItem('myToken', token)
     } else {
-      delete axios.defaults.headers.common.Authorization
       localStorage.removeItem('myToken')
+      delete axios.defaults.headers.common.Authorization
       this.user = null
     }
   }
